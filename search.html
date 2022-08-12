@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--saerching_page.html, style1.css, script.js를 같이 다운받아서 파일위치를 적용하면 됨!-->
+        <meta charset="UTF-8">
+        <title>알뜰 수정의 장학금 찾기</title> <!--CSS파일 있는 위치에 맞게 조정. 같은 폴더에 있으면 파일명만 적어주면 됨-->
+    
+    <style>
+        :root{ /* var(내용) 형식으로 여기서 정해둔 변수를 쓸 수 있다.*/
+    --sungshinViolet1: rgb(91, 74, 148);
+    --sungshinViolet2: rgb(121, 83, 169);
+    --lightPink: rgb(253, 247, 255);
+}
+
+ul{list-style: none;}
+li{margin-bottom: 20px;}
+
+/*상단바 스타일. justfy-content는 안에 있는 컨텐츠를 가로로 어떻게 정렬할지 정해줌*/
+nav{
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1500px;
+    height: 100px;
+    text-align: center;
+}
+nav a{margin-left: 10px;}
+nav button{
+    cursor: pointer;
+    height: 80px;
+    width: 70px;
+    border: none;
+    font-size: 20px;
+    text-align: center;
+    color: var(--sungshinViolet1);
+    background-color: white;
+}
+
+/* 가로줄 설정*/
+hr{color: var(--sungshinViolet1);}
+
+/*--------------------검색창---------------------*/
+#search {
+    width: 550px;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 15px;
+    border-width: 1px;
+}
+#searchBtn {
+    cursor: pointer;
+    width: 90px;
+    height: 56px;
+    font-size: 18px;
+    border-radius: 15px;
+    color: aliceblue;
+    background-color: var(--sungshinViolet1);
+}
+
+/*------------검색 필터창-----------------*/
+#filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto; /*블록요소 가운데 정렬에 쓰임*/
+    width: 1300px;
+    height: 70px;
+}
+/*---------------체크박스-----------------*/
+label { 
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    color: var(--sungshinViolet1);
+    font-weight: bold;
+}
+
+/*---------카테고리---------------*/
+.filterBtn {
+    cursor: pointer;
+    width: 120px;
+    height: 60px;
+    border-radius: 30px;
+    border-width: 1px;
+    border-color: var(--sungshinViolet2);
+    font-weight: bold;
+    font-size: 15px;
+    color: var(--sungshinViolet1);
+    background-color: white;
+}
+.filterBtn:focus{
+    color: aliceblue;
+    background-color: var(--sungshinViolet1);
+  }
+
+/*-----------------장학금 목록 구성-------------------*/
+#scholarship{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+    justify-items: center;
+    max-width: 1250px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+.scholarshipBtn{
+    cursor: pointer;
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    border-width: 0px;
+    background-color: var(--lightPink);
+}
+.scholarshipBtn span{
+    font-size: 120%;
+    font-weight: bold;
+    text-align: left;
+}
+.scholarshipBtn:hover{ /* 마우스 커서 올리면 색상 변경 */
+    color: aliceblue;
+    background-color: var(--sungshinViolet2);
+}
+    </style>
+    </head>
+    <body>
+        <nav> <!--헤더-->
+            <a href=""><img src="file:///C:/Users/user/Downloads/%EC%95%88%EA%B2%BD%EC%88%98%EC%A0%95.jpg" width="100px";></a>
+            <!--로고이미지 누르면 메인페이지로 이동. 주소 이어두기-->
+            <form>
+                <input type="search" id="search" autocomplete='off'>
+                <button type="submit" id="searchBtn">검색</button>
+            </form>
+            <section><button href="info/">Info</button><button href="question/">Q&A</button></section>
+        </nav>
+        <hr> 
+        <section id="filter">
+            <!--자바로 필터 기능 구현-->
+            <label>공인영어성적<input type="checkbox" name="영어" value="1" onchange="makeFilter(this);"></label>
+            <label>개인신청필요<input type="checkbox" name="개인" value="2" onchange="makeFilter(this);"></label>
+            <label>중복수혜 가능<input type="checkbox" name="중복O" value="3" onchange="makeFilter(this);"></label>
+            <label>중복수혜 불가<input type="checkbox" name="중복X" value="4" onchange="makeFilter(this);"></label>
+            <label>활동 장학금<input type="checkbox" name="활동" value="5" onchange="makeFilter(this);"></label>
+            <label>근로 장학금<input type="checkbox" name="근로" value="6" onchange="makeFilter(this);"></label>
+            <label>추천서 필요<input type="checkbox" name="추천" value="7" onchange="makeFilter(this);"></label>
+            <label>생활비<input type="checkbox" name="생활" value="8" onchange="makeFilter(this);"></label>
+            <label>해외 연수<input type="checkbox" name="해외" value="9" onchange="makeFilter(this);"></label>
+            <label>외국인 유학생<input type="checkbox" name="외국" value="10" onchange="makeFilter(this);"></label>
+        </section>
+        <hr>
+        <ul id="scholarship"><!--자바스크립트로 검색엔진 구현. 검색창에 아무것도 안 쓰고 엔터를 누르면 전체 목록 확인 가능.-->
+        </ul>
+        <hr>
+        <section style="text-align: right;"> <!--페이지 아래에 학교 포탈로 연결되는 기능-->
+            <a href="https://portal.sungshin.ac.kr" target="_blank"> <img src="file:///C:/Users/user/Desktop/logo.jpg" width="150px";></a>
+        </section>
+        <script>
+            const scholarshipname = [
+    {id: 1,
+    name: '성신 장학금',
+    info: '직전학기 성적이 2.5이상(F허용) / 이중수혜금지 / 복학학기선발불가 / 학생신청'},
+    {id: 2,
+    name: '성적 장학금',
+    info: '각 학과(부), 학년별 수석, 1~3등인 자로서 공인인증 영어성적 요건을 만족한 자'},
+    {id: 3,
+    name: '가계 곤란 장학금',
+    info: '향학장학금, 성신사랑장학금, 성신희망장학금, 형설장학금'},
+    {id: 4,
+    name: '포러스 장학금',
+    info: '활동성 장학금'},
+    {id: 5,
+    name: 'S+마일리지 장학금',
+    info: '활동성 장학금'},
+    {id: 6,
+    name: '공로 장학금',
+    info: '활동성 장학금'},
+    {id: 7,
+    name: '리더십 우수 장학금',
+    info: '활동성 장학금'},
+    {id: 8,
+    name: '창업 장학금',
+    info: '교내 창업교육 프로그램 참여와 교내외 창업경진대회, 창업지원사업 참가 등의 사유로 지급조건을 충족하는 자'},
+    {id: 9,
+    name: '해외 연수 장학금',
+    info: '해외교류대학 연수학생 중 관련부서의 추천을 받은 자'},
+    {id: 10,
+    name: '외국인 학생 장학금',
+    info: '외국인 학생 및 외국인 교류 프로그램 참여자가 받을 수 있는 장학금'},
+    ]
+
+
+    /*장학금 목록 전체 출력*/
+    const s = document.getElementById('scholarship');
+
+    function showList(val='') {
+    s.innerHTML = '';
+    const res = scholarshipname.forEach(scholarshipname => {
+        if(scholarshipname.name.includes(val)) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <button class="scholarshipBtn"><span>${scholarshipname.name}</span><br>
+                ${scholarshipname.info}</button>
+            `
+            s.appendChild(li);
+        }
+    })
+    }
+
+
+    /*검색창에 쓰면 name에 그 단어가 쓰인 목록들만 골라서 출력해줌!*/
+    showList();
+    const searchInput = document.getElementById('search');
+    const searchBtn = document.getElementById('searchBtn');
+
+    searchBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const val = searchInput.value;
+    showList(val);
+    } )
+
+
+
+    /*검색 체크박스 */
+    var ageArr = new Array();
+
+    function makeFilter(target){
+    var ageVal = target.value; //check value
+    var confirmCheck = target.checked; //check여부 확인
+    console.log("필터 선택값 : "+ageVal);
+    console.log("선택여부 : "+confirmCheck);
+
+    // check true
+    if(confirmCheck == true){
+        console.log("check");
+        ageArr.push(ageVal); // check value filter 배열에 입력
+
+    // check false
+    }else{
+        ageArr.splice(ageArr.indexOf(ageVal), 1);}} // check value filter 배열내용 삭제 
+
+        </script>
+    </body>
+</html>
